@@ -2,10 +2,10 @@ const svg = d3.select("svg"),
   margin = {top: 70, right: 20, bottom: 50, left: 20},
   svgWidth = d3.select("svg").property("parentNode").offsetWidth,
   width =  svgWidth - margin.left - margin.right,
-  height = width / 1.6 - margin.top - margin.bottom,
+  height = 500 - margin.top - margin.bottom,
   chart = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`)
 
-svg.attr("width", svgWidth).attr("height", svgWidth / 1.6)
+svg.attr("width", svgWidth).attr("height", 500)
 svg.append("defs").append("marker").attr("id","arrow").attr("viewBox","0 0 10 10").attr("refX", "5").attr("refY", "5").attr("markerWidth", "6").attr("markerHeight", "6").attr("orient", "auto-start-reverse")
   .append("path").attr("d", "M 0 0 L 10 5 L 0 10 z")
 
@@ -29,16 +29,16 @@ d3.csv("data.csv", ({year, deficits, unemployment}) => ({year: +year, deficit: +
     chart.append("text").text("Unemployment Rate").attr("x", width/2).attr("y", height + 40).style("text-anchor", "middle")//.style("font-weight", 700)
     chart.append("text").text("Budget Surplus/Deficit").attr("x", -margin.left).attr("y", -20).style("text-anchor", "start")//.style("font-weight", 700)//.style("dominant-baseline", "middle")
 
-    chart.append("text").text("Low Unemployment/").attr("x", x(4.25)).attr("y", y(-9)).style("text-anchor", "middle").style("font-size", ".7em").style("fill", d3.hcl(0,0,80))
+    chart.append("text").text("Low Unemployment/").attr("x", x(4.25)).attr("y", y(-9)).style("text-anchor", "middle").style("font-size", ".7em").style("fill", d3.hcl(0,0,70))
       .append("tspan").text("Budget Deficit").attr("x", x(4.25)).attr("dy", "1em")
 
-    chart.append("text").text("High Unemployment/").attr("x", x(8)).attr("y", y(-9)).style("text-anchor", "middle").style("font-size", ".7em").style("fill", d3.hcl(0,0,80))
+    chart.append("text").text("High Unemployment/").attr("x", x(8)).attr("y", y(-9)).style("text-anchor", "middle").style("font-size", ".7em").style("fill", d3.hcl(0,0,70))
       .append("tspan").text("Budget Deficit").attr("x", x(8)).attr("dy", "1em")
 
-    chart.append("text").text("Low Unemployment/").attr("x", x(4.25)).attr("y", y(4)).style("text-anchor", "middle").style("font-size", ".7em").style("fill", d3.hcl(0,0,80))
+    chart.append("text").text("Low Unemployment/").attr("x", x(4.25)).attr("y", y(4)).style("text-anchor", "middle").style("font-size", ".7em").style("fill", d3.hcl(0,0,70))
       .append("tspan").text("Budget Surplus").attr("x", x(4.25)).attr("dy", "1em")
 
-    chart.append("text").text("High Unemployment/").attr("x", x(8)).attr("y", y(4)).style("text-anchor", "middle").style("font-size", ".7em").style("fill", d3.hcl(0,0,80))
+    chart.append("text").text("High Unemployment/").attr("x", x(8)).attr("y", y(4)).style("text-anchor", "middle").style("font-size", ".7em").style("fill", d3.hcl(0,0,70))
       .append("tspan").text("Budget Surplus").attr("x", x(8)).attr("dy", "1em")
 
     chart.append("path").datum(data).attr("d", line).attr("id", "dataline").style("fill", "none").style("stroke", d3.hcl(310,50,60)).style("stroke-width", 4)//.style("stroke-opacity", .5)
