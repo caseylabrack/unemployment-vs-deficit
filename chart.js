@@ -9,7 +9,7 @@ svg.attr("width", svgWidth).attr("height", 500)
 svg.append("defs").append("marker").attr("id","arrow").attr("viewBox","0 0 10 10").attr("refX", "5").attr("refY", "5").attr("markerWidth", "6").attr("markerHeight", "6").attr("orient", "auto-start-reverse")
   .append("path").attr("d", "M 0 0 L 10 5 L 0 10 z")
 
-const x = d3.scaleLinear().domain([3.5, 10]).range([0,width]),
+const x = d3.scaleLinear().domain([3, 10]).range([0,width]),
       y = d3.scaleLinear().domain([-10,5]).range([height, 0]),
       line = d3.line().x(row => x(row.unemployment)).y(row => y(row.deficit))
 
@@ -56,10 +56,19 @@ d3.csv("data.csv", ({year, deficits, unemployment}) => ({year: +year, deficit: +
             return function(t) { that.text(Math.round(i(t))); };
           })
 
-    // chart.append("circle").datum(data[0]).attr("cx", d => x(d.unemployment)).attr("cy", d => y(d.deficit)).attr("r", 5)
-    //   .transition()
-    //   .attr("z", l)
-    //   .attr("cx", function(){ console.log(d3.select(this).attr("z"))})
+    chart.append("circle").attr("id", "dataEndMarker").datum(data[0]).attr("cx", d => x(d.unemployment)).attr("cy", d => y(d.deficit)).attr("r", 5).style("fill", datacolor)
+      .transition()
+      .duration(5000)
+      .attrTween("cx", function () {
+        return function (t) {
+          return d3.select("path#dataline").node().getPointAtLength(l * t).x
+        }
+      })
+      .attrTween("cy", function () {
+        return function (t) {
+          return d3.select("path#dataline").node().getPointAtLength(l * t).y
+        }
+      })
 
     d3.select("button").attr("disabled", "disabled")
     .on("click", function () {
@@ -82,5 +91,19 @@ d3.csv("data.csv", ({year, deficits, unemployment}) => ({year: +year, deficit: +
                   i = d3.interpolateNumber(that.text(), 2018);
               return function(t) { that.text(Math.round(i(t))); };
             })
+
+      chart.select("#dataEndMarker")
+        .transition()
+        .duration(5000)
+        .attrTween("cx", function () {
+          return function (t) {
+            return d3.select("path#dataline").node().getPointAtLength(l * t).x
+          }
+        })
+        .attrTween("cy", function () {
+          return function (t) {
+            return d3.select("path#dataline").node().getPointAtLength(l * t).y
+          }
+        })
     })
   })
