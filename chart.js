@@ -1,6 +1,6 @@
 const svg = d3.select("svg"),
   margin = {top: 40, right: 20, bottom: 50, left: 28},
-  svgWidth = d3.select("svg").property("parentNode").offsetWidth,
+  svgWidth = document.body.clientWidth - parseFloat(getComputedStyle(document.body).paddingLeft) * 2 - 20, //make the chart as wide as the body (minus padding and scrollbar width)
   width =  svgWidth - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom,
   chart = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`)
